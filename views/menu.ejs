@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .menu-title {
+            font-family: "Dancing Script", cursive;
+            font-size: 2.5rem;
+            color: #333;
+        }
+
+        .menu-filters .filter-btn {
+            background: none;
+            border: none;
+            padding: 8px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: capitalize;
+            cursor: pointer;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .menu-filters .filter-btn:hover,
+        .menu-filters .filter-btn.active {
+            color: #ffbe33;
+        }
+
+        .menu-card {
+            background: #fff;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .menu-img {
+            width: 100%;
+            height: 280px;
+            border-bottom: 5px solid #f1f1f1;
+        }
+
+        .menu-card-body {
+            padding: 15px;
+            background: #212529;
+            color: #fff;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .menu-item-title {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .menu-footer {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .price {
+            color: #ffbe33;
+        }
+
+        .btn-warning {
+            background-color: #ffbe33;
+            border: none;
+            transition: background 0.3s ease;
+        }
+
+        .btn-warning:hover {
+            background-color: #e69c00;
+        }
+
+        .btn-warning i {
+            color: #fff;
+        }
+
+        .btn-box {
+            display: flex;
+            justify-content: center;
+            margin-top: 45px;
+        }
+
+        .btn-box a {
+            display: inline-block;
+            padding: 10px 55px;
+            background-color: #ffbe33;
+            color: #ffffff;
+            border-radius: 45px;
+            transition: all 0.3s;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-box a:hover {
+            background-color: #e69c00;
+        }
+
+        .tab-content .tab-pane {
+            display: none;
+        }
+
+        .tab-content .active {
+            display: block;
+        }
+        .our{
+            margin-top: 20px;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+        }
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+        }
+
+
+.nav-link.active {
+    color: #fff !important;
+    background-color: #333 !important; 
+}
+
+
+.nav-link:hover {
+    color: #ffbe33 !important; 
+}
+
+
+
+    </style>
+</head>
+<body>
+    <%- include('./common/header1.ejs') %>
+     <div class="container">
+         <div class="row">
+             <div class="col-12 our">
+                 <h1>Our Menu</h1>
+             </div>
+         </div>
+     </div>
+
+    
+<!-- Navigation Tabs -->
+<ul class="nav nav-tabs" id="menuTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">All</a>
+    </li>
+    <% categories.forEach(category => { %>
+        <li class="nav-item">
+            <a class="nav-link" id="<%= category.name.toLowerCase() %>-tab" data-toggle="tab" href="#<%= category.name.toLowerCase() %>" role="tab" aria-controls="<%= category.name.toLowerCase() %>" aria-selected="false"><%= category.name %></a>
+        </li>
+    <% }); %>
+</ul>
+
+<!-- Tab Content for Categories -->
+<div class="tab-content" id="menuTabContent">
+    <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+        <section class="menu-section py-5">
+            <div class="container">
+                <div class="row g-4" id="all-items">
+                    <% categories.forEach(category => { %>
+                        <% products[category.name].forEach(product => { %>
+                            <div class="col-lg-4 col-md-6 menu-item">
+                                <div class="menu-card">
+                                    <img src="/upload/<%= product.image %>" alt="<%= product.Productname %>" class="menu-img">
+                                    <div class="menu-card-body">
+                                        <h5 class="menu-item-title"><%= product.productname %></h5>
+                                        <p class="menu-description">
+                                            <span class="short-description">
+                                              <%= product.description.substring(0, 100) %>...
+                                            </span>
+                                            <span class="full-description" style="display: none;">
+                                              <%= product.description %>
+                                            </span>
+                                            <a href="/detail/<%= product._id %>"><span class="read-more" style="color: blue; cursor: pointer;">Read More</span></a>
+                                          </p>
+                                        <div class="menu-footer d-flex justify-content-between align-items-center">
+                                            <span class="price">₹<%= product.price %></span>
+                                            <button class="btn btn-warning rounded-circle"><i class="fa fa-shopping-cart"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% }); %>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <% categories.forEach(category => { %>
+        <div class="tab-pane fade" id="<%= category.name.toLowerCase() %>" role="tabpanel" aria-labelledby="<%= category.name.toLowerCase() %>-tab">
+            <section class="menu-section py-5">
+                <div class="container">
+                    <div class="row g-4" id="<%= category.name.toLowerCase() %>-items">
+                        <% products[category.name].forEach(product => { %>
+                            <div class="col-lg-4 col-md-6 menu-item">
+                                <div class="menu-card">
+                                    <img src="/upload/<%= product.image %>" alt="<%= product.Productname %>" class="menu-img">
+                                    <div class="menu-card-body">
+                                        <h5 class="menu-item-title"><%= product.productname %></h5>
+                                        <p class="menu-description">
+                                            <span class="short-description">
+                                              <%= product.description.substring(0, 100) %>...
+                                            </span>
+                                            <span class="full-description" style="display: none;">
+                                              <%= product.description %>
+                                            </span>
+                                            <a href="/detail/<%= product._id %>"><span class="read-more" style="color: blue; cursor: pointer;">Read More</span></a>
+                                          </p>
+                                          <div class="menu-footer d-flex justify-content-between align-items-center">
+                                            <span class="price">₹<%= product.price %></span>
+                                            <button class="btn btn-warning rounded-circle"><i class="fa fa-shopping-cart"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                </div>
+            </section>
+        </div>
+    <% }); %>
+</div>
+
+   
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const readMoreButtons = document.querySelectorAll('.read-more');
+      
+          readMoreButtons.forEach((button) => {
+            button.addEventListener('click', function () {
+              const parent = this.parentElement;
+              const shortDesc = parent.querySelector('.short-description');
+              const fullDesc = parent.querySelector('.full-description');
+      
+              if (fullDesc.style.display === 'none') {
+                fullDesc.style.display = 'inline';
+                shortDesc.style.display = 'none';
+                this.textContent = 'Show Less'; // Update button text
+              } else {
+                fullDesc.style.display = 'none';
+                shortDesc.style.display = 'inline';
+                this.textContent = 'Read More'; // Revert button text
+              }
+            });
+          });
+        });
+      </script>
+    
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

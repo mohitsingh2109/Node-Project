@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pizza Hub - Menu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    .menu-img {
+      width: 100%;
+      height: 280px;
+      border-bottom: 5px solid #f1f1f1;
+    }
+    .hidden {
+      display: none;
+    }
+    .center {
+      text-align: center;
+    }
+    .font-face {
+      font-family: 'Lucida Sans', sans-serif;
+      font-weight: bold;
+    }
+    .header {
+      width: 100%;
+      height: 450px;
+      background-image: linear-gradient(rgb(0 0 0 / 96%), rgb(6 5 0 / 10%)), url(../images/burger1.jpg);
+      background-size: cover;
+      background-position: center;
+    }
+    .sub2 {
+      padding-top: 100px;
+      text-align: center;
+      color: white;
+    }
+    /* Customer Images */
+.customer-img {
+  width: 80px;
+  height: 80px;
+  margin: 0 10px;
+  border: 3px solid #ff9800;
+  padding: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.about_section {
+  background: #222831;
+  color: #ffffff;
+}
+
+.about_section .row {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.about_section .img-box {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.about_section .img-box img {
+  width: 100%;
+  max-width: 445px;
+  position: relative;
+  z-index: 2;
+}
+
+.about_section .detail-box p {
+  margin-top: 15px;
+}
+
+.about_section .detail-box a {
+  display: inline-block;
+  padding: 10px 45px;
+  background-color: #ffbe33;
+  color: #ffffff;
+  border-radius: 45px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border: none;
+  margin-top: 15px;
+  text-decoration: none;
+}
+
+.about_section .detail-box a:hover {
+  background-color: #e69c00;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Include Header -->
+  <%- include('./common/header1.ejs') %>
+
+  <div class="header">
+    <div class="sub2">
+      <h2 class="animate__animated animate__backInLeft">Pizza Hub</h2>
+      <h3 class="animate__animated animate__zoomIn">Discover the best fast food & healthy food</h3>
+    </div>
+  </div>
+
+  <!-- Our Menu Section -->
+  <div class="container-fluid mt-5">
+    <h1 class="center font-face">Our Menu</h1>
+    <div class="row g-4" id="all-items">
+      <% if (productdata.length > 0) { %>
+        <% for (var i = 0; i < productdata.length; i++) { %>
+          <div class="col-lg-4 col-md-6 menu-item all chinese tandoori main-course <%= i >= 6 ? 'hidden' : '' %>">
+            <div class="card">
+              <img src="/upload/<%= productdata[i].image %>" alt="<%= productdata[i].Productname %>" class="menu-img">
+              <div class="card-body">
+                <h5 class="card-title"><%= productdata[i].productname %></h5>
+                <p class="card-text short-desc" id="desc-<%= i %>">
+                  <%= productdata[i].description.length > 50 ? productdata[i].description.substring(0, 50) + '...' : productdata[i].description %>
+                </p>
+                <% if (productdata[i].description.length > 50) { %>
+                  <a href="/detail/<%= productdata[i]._id %>" class="read-more text-primary" data-index="<%= i %>">Read More</a>
+                <% } %>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                  <span class="price">₹<%= productdata[i].price %></span>
+                  <a href="/detail/<%= productdata[i]._id %>" class="btn btn-warning rounded-circle">
+                    <i class="fa fa-shopping-cart"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% } %>
+      <% } else { %>
+        <p class="text-center">No records found</p>
+      <% } %>
+    </div>
+  
+  
+  
+
+    <!-- View More Button -->
+    <% if (productdata.length > 3) { %>
+      <div class="text-center mt-3">
+        <a href="/menu" class="btn" style="background-color: #ff9800; color: white; border: none;">
+          View more
+        </a>
+      
+      </div>
+    <% } %>
+  </div>
+
+      <!-- about section -->
+
+      <section class="about_section layout_padding">
+        <div class="container  ">
+    
+          <div class="row">
+            <div class="col-md-6 ">
+              <div class="img-box">
+                <img src="./images/about.jpg" alt="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="detail-box">
+                <div class="heading_container">
+                  <h2>
+                    All About Pizza Hub 
+                  </h2>
+                </div>
+                <p>
+                  Tandoori Chaupal is a popular restaurant that offers an authentic Indian dining experience, specializing in tandoori and Mughlai cuisine. The restaurant is known for its warm, welcoming atmosphere, where guests can enjoy a blend of traditional flavors and contemporary dining.
+                </p>
+                <a href="/about">
+                  Read More
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+      <!-- end about section -->
+
+     <!-- testimonial section -->
+     <div class="container text-center my-5 b2">
+      <h1 class="mb-5 head2">What Says Our Customers</h1>
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="testimonial bg-dark text-white p-4 rounded">
+            <p>
+              "The tandoori dishes are simply incredible! The smoky flavor and spices are just perfect. Highly recommend their kebabs and biryanis."
+            </p>
+            <h5 class="mt-4">Moana Michell</h5>
+            <small>Yuvraj Singh</small>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial bg-dark text-white p-4 rounded">
+  
+            <p>
+              "Fresh, flavorful, and generous portions. Tandoori Chaupal never disappoints when it comes to taste and quality."
+  
+            </p>
+            <h5 class="mt-4">Mike Hamell</h5>
+            <small>Rahul Chaudhary</small>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center align-items-center mt-5">
+        <img src="./images/u1.png" alt="Customer 1" class="rounded-circle customer-img">
+        <img src="./images/u2.png" alt="Customer 2" class="rounded-circle customer-img">
+      </div>
+      <div class="mt-3">
+        <button class="btn btn-warning mx-2"></button>
+        <button class="btn btn-warning mx-2"></button>
+      </div>
+    </div>
+  <!-- Google Map -->
+  <section id="google-map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28036.675755308683!2d77.02408122021329!3d28.552207017317617!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1bad131a7b4b%3A0xec0ac145ce72128f!2sDwarka%20Sector%2021!5e0!3m2!1sen!2sin!4v1734449115457!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen></iframe>
+  </section>
+
+  <!-- Include Footer -->
+  <%- include('./common/fotter.ejs') %>
+
+  <!-- JavaScript -->
+  <script>
+    document.getElementById("view-more-btn")?.addEventListener("click", function () {
+      document.querySelectorAll(".menu-item.hidden").forEach(item => {
+        item.classList.remove("hidden");
+      });
+      this.style.display = "none";
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+    const viewMoreBtn = document.getElementById("view-more-btn");
+    const hiddenItems = document.querySelectorAll(".menu-item.d-none");
+
+    if (viewMoreBtn) {
+      viewMoreBtn.addEventListener("click", function () {
+        hiddenItems.forEach(item => item.classList.remove("d-none"));
+        viewMoreBtn.style.display = "none"; // Hide button after clicking
+      });
+    }
+  });
+
+
+
+  </script>
+
+</body>
+</html>

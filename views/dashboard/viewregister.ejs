@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Table</title>
+  <style>
+    table {
+      font-family: Arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      text-align: left;
+      padding: 12px;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #ddd;
+    }
+
+    h2 {
+      color: #4CAF50;
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .container-fluid {
+      padding: 20px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .col-3 {
+      width: 23%;
+    }
+
+    .col-9 {
+      width: 73%;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <%- include("./header.ejs"); %>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-3">
+        <%- include("./left.ejs"); %>
+      </div>
+      <div class="col-9">
+        <h2>Registration Table</h2>
+        <% if(registerdata.length>0){ %> 
+
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Password</th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          <% for(var i=0; i<registerdata.length; i++){%>
+            <tr>
+              <td><%= registerdata[i].name %></td>
+              <td><%= registerdata[i].phone %></td>
+              <td><%= registerdata[i].email %></td>
+              <td><%= registerdata[i].address %></td>
+             
+              <td><a href="/edit/<%= registerdata[i]._id %>"><button>Edit</button></a></td>
+              <td><a href="/delete/<%= registerdata[i]._id %>"><button>Delete</button></a></td>
+            </tr>
+            <% } %>
+          
+        </tbody>
+
+         
+        </table>
+        <% } else { %>
+          No record found
+      <% } %>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>

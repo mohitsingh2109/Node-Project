@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+</head>
+<body>
+    <h2>Enter your Email to receive OTP</h2>
+    <form id="send-otp-form">
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <button type="submit">Send OTP</button>
+    </form>
+
+    <h2>Verify OTP</h2>
+    <form id="verify-otp-form">
+        <input type="text" id="otp" placeholder="Enter OTP" required>
+        <button type="submit">Verify OTP</button>
+    </form>
+
+    <script>
+        document.getElementById('send-otp-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+
+            fetch('/send-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email }),
+            })
+            .then(response => response.json())
+            .then(data => alert(data))
+            .catch(error => alert('Error sending OTP'));
+        });
+
+        document.getElementById('verify-otp-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const otp = document.getElementById('otp').value;
+
+            fetch('/verify-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, otp }),
+            })
+            .then(response => response.json())
+            .then(data => alert(data))
+            .catch(error => alert('Error verifying OTP'));
+        });
+    </script>
+</body>
+</html>
